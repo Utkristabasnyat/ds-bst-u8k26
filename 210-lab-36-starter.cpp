@@ -1,33 +1,31 @@
 
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "IntBinaryTree.h"
 using namespace std;
 
 int main() {
     IntBinaryTree tree;
+    ifstream inputFile("codes.txt");
+    string code;
+    int count = 0;
 
-    tree.insertNode("uANq6eH7");
-    tree.insertNode("gwlXSBJv");
-    tree.insertNode("i6QN2GdS");
-    tree.insertNode("9nuGJ2CE");
-    tree.insertNode("AvqfjP0z");
+    if (!inputFile) {
+        cout << "Error: Could not open codes.txt" << endl;
+        return 1;
+    }
 
-    cout << "BST records (inorder):" << endl;
-    tree.displayInOrder();
+    while (inputFile >> code) {
+        tree.insertNode(code);
+        count++;
+    }
 
-    cout << "\nSearching for uANq6eH7: ";
-    cout << (tree.searchNode("uANq6eH7") ? "Found" : "Not found") << endl;
+    inputFile.close();
 
-    cout << "Searching for TEST1234: ";
-    cout << (tree.searchNode("TEST1234") ? "Found" : "Not found") << endl;
+    cout << "Successfully loaded " << count << " codes into the BST." << endl;
+    cout << "\nBST records (inorder traversal):" << endl;
 
-    cout << "\nRemoving gwlXSBJv..." << endl;
-    tree.remove("gwlXSBJv");
-
-    cout << "Searching after removal: ";
-    cout << (tree.searchNode("gwlXSBJv") ? "Found" : "Not found") << endl;
-
-    cout << "\nBST after removal:" << endl;
     tree.displayInOrder();
 
     return 0;
